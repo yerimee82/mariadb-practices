@@ -38,13 +38,13 @@ select concat(first_name, ' ',last_name) as '전체 이름' from employees where
 
 -- 문제9.
 -- 어떤 직책들이 있나요? 중복 없이 이름이 긴 순서대로 출력해 보세요.
-    select distinct title from titles order by length(title) desc ;
+    select distinct title from titles order by length(title) desc;
 
 -- 문제10
 -- 현재 Engineer 직책의 사원은 총 몇 명입니까?
-    select count(*) from titles where title = 'Engineer' and emp_no not in (select dept_manager.emp_no from dept_manager);
+    select count(*) from titles where title = 'Engineer' and emp_no not in (select dept_manager.emp_no from dept_manager) and to_date >= current_date;
 
 -- 문제11
 -- 사번이 13250(Zeydy)인 지원이 직책 변경 상황을 시간순으로 출력해보세요.
-    select title as 직책 from titles where emp_no = 13250 order by to_date asc;
+    select title as 직책 from titles where emp_no = 13250 order by from_date;
 
