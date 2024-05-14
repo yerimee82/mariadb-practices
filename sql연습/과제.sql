@@ -14,7 +14,11 @@ select concat(first_name, ' ',last_name) as '전체 이름' from employees where
     select
         sum(case when gender = 'F' then 1 else 0 end) as '여직원 수',
         sum(case when gender = 'F' then 1 else 0 end) as '남직원 수'
-    from employees;
+    from employees
+    where emp_no not in (select emp_no from dept_emp where to_date >= current_date);
+
+select * from employees;
+
 
 -- 문제4.
 -- 현재 근무하고 있는 직원 수는 몇 명입니까? (salaries 테이블을 사용합니다.)
