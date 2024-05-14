@@ -5,7 +5,7 @@
     select a.emp_no 사번, a.first_name 이름, b.salary 연봉
     from employees a join salaries b on a.emp_no = b.emp_no
     where b.to_date = '9999-01-01'
-    order by b.salary;
+    order by b.salary desc;
 
 -- 문제2.
 -- 전체 사원의 사번, 이름, 현재 직책을 이름 순서로 출력하세요.
@@ -41,7 +41,8 @@
        concat(a.first_name, ' ', a.last_name) as 이름,
        c.salary as 연봉,
        d.title as 직책,
-       e.dept_name as 부서
+       e.dept_name as 부서,
+        count(*)
     from employees a
     join dept_emp b on a.emp_no = b.emp_no
     join salaries c on a.emp_no = c .emp_no
@@ -92,10 +93,10 @@
     from employees a
     join salaries b on a.emp_no = b.emp_no
     join titles c on a.emp_no = c.emp_no
-    where b.salary >= 50000
     and b.to_date = '9999-01-01'
     and c.to_date = '9999-01-01'
     group by title
+    having avg(salary) >= 50000
     order by 평균급여 desc;
 
 -- 문제9.
