@@ -105,13 +105,13 @@ where b.to_date = '9999-01-01'
   and c.to_date = '9999-01-01'
   and d.to_date = '9999-01-01'
   and b.dept_no = (select dept_no from highestDept)
-order by d.salary desc;
+order by d.salary asc ;
 
 
 
 -- 문제6.
 -- 평균 연봉이 가장 높은 부서는?
-select c.dept_no '평균 연봉 높은 부서'
+select c.dept_no '평균 연봉 높은 부서', avg(salary) '평균연봉'
 from employees a
          join salaries b on a.emp_no = b.emp_no
          join dept_emp c on a.emp_no = c.emp_no
@@ -162,12 +162,13 @@ select d.dept_name                       부서이름,
           and bm.to_date = '9999-01-01') '매니저 이름',
        (select 매니저연봉
         from m_salary
-        where 부서 = b.dept_no)            '매니저 연봉'
+        where 부서 = b.dept_no )            '매니저 연봉'
 from employees a
          join dept_emp b on a.emp_no = b.emp_no
          join salaries c on a.emp_no = c.emp_no
          join departments d on b.dept_no = d.dept_no
 where b.to_date = '9999-01-01'
   and c.to_date = '9999-01-01'
-  and c.salary > (select 매니저연봉 from m_salary where 부서 = b.dept_no);
+  and c.salary > (select 매니저연봉 from m_salary where 부서 = b.dept_no)
+order by c.salary asc;
 
