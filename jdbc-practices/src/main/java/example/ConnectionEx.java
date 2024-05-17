@@ -1,10 +1,10 @@
-package test;
+package example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionTest {
+public class ConnectionEx {
     public static void main(String[] args) {
         Connection connection = null;
         try {
