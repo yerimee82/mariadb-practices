@@ -3,7 +3,6 @@ package bookmall.vo;
 public class OrderBookVo {
     private Long orderNo;
     private Long bookNo;
-
     private String bookTitle;
     private int quantity;
     private int price;

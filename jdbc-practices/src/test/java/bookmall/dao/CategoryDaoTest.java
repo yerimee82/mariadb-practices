@@ -4,6 +4,7 @@ import bookmall.vo.CategoryVo;
 import org.junit.jupiter.api.*;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CategoryDaoTest {
@@ -21,6 +22,12 @@ public class CategoryDaoTest {
     public void testInsert() {
         categoryDao.insert(mockCategoryVo01);
         assertNotNull(mockCategoryVo01.getNo());
+    }
+
+    @Test
+    @Order(2)
+    public void testFindAll() {
+        assertEquals(count + 1, categoryDao.findAll().size());
     }
 
     @AfterAll

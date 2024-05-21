@@ -34,47 +34,45 @@ public class CartDao {
         int result = 0;
         try (
                 Connection conn = getConnection();
-                PreparedStatement pstmt1 = conn.prepareStatement("insert into cart(user_no, book_no, title, quantity) values (?,?,?,?)");
-                PreparedStatement pstmt2 = conn.prepareStatement("select last_insert_id() from dual");
+                PreparedStatement pstmt = conn.prepareStatement("insert into cart(user_no, book_no, quantity) values (?,?,?)");
         ) {
-            pstmt1.setLong(1, vo.getUserNo());
-            pstmt1.setLong(2, vo.getBookNo());
-            pstmt1.setString(3, vo.getBookTitle());
-            pstmt1.setInt(4, vo.getQuantity());
-            result = pstmt1.executeUpdate();
+            pstmt.setLong(1, vo.getUserNo());
+            pstmt.setLong(2, vo.getBookNo());
+            pstmt.setInt(3, vo.getQuantity());
+            result = pstmt.executeUpdate();
 
-            ResultSet rs = pstmt2.executeQuery();
-            vo.setUserNo(rs.next() ? rs.getLong(1) : null);
-            rs.close();
         } catch (SQLException e) {
             System.out.println("error:" + e);
         }
         return result;
     }
 
-    public List<CartVo> findByUserNo(Long no) {
+    public List<CartVo> findByUserNo(Long userNo) {
         List<CartVo> result = new ArrayList<>();
 
         try (
                 Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement("select b.no, c.no, c.title, a.quantity from cart a, user b, book c where a.user_no = b.no and a.book_no = c.no");
-                ResultSet rs = pstmt.executeQuery();
+                PreparedStatement pstmt = conn.prepareStatement("select a.user_no, a.book_no, b.title, a.quantity from cart a, book b where a.book_no = b.no and a.user_no = ?");
         ) {
             //6. 결과 처리
-            while (rs.next()) {
-                Long userNo = rs.getLong(1);
-                Long bookNo = rs.getLong(2);
-                String bookTitle = rs.getString(3);
-                int quantity = rs.getInt(4);
+            pstmt.setLong(1, userNo);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Long uNo = rs.getLong(1);
+                    Long bookNo = rs.getLong(2);
+                    String bookTitle = rs.getString(3);
+                    int quantity = rs.getInt(4);
 
-                CartVo vo = new CartVo();
-                vo.setUserNo(userNo);
-                vo.setBookNo(bookNo);
-                vo.setBookTitle(bookTitle);
-                vo.setQuantity(quantity);
+                    CartVo vo = new CartVo();
+                    vo.setUserNo(uNo);
+                    vo.setBookNo(bookNo);
+                    vo.setBookTitle(bookTitle);
+                    vo.setQuantity(quantity);
 
-                result.add(vo);
+                    result.add(vo);
+                }
             }
+
         } catch (SQLException e) {
             System.out.println("error:" + e);
         }

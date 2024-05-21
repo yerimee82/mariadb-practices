@@ -4,6 +4,7 @@ import bookmall.vo.UserVo;
 import org.junit.jupiter.api.*;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserDaoTest {
@@ -21,6 +22,12 @@ public class UserDaoTest {
     public void testInsert() {
         userDao.insert(mockUserVo01);
         assertNotNull(mockUserVo01.getNo());
+    }
+
+    @Test
+    @Order(2)
+    public void testFindAll() {
+        assertEquals(count + 1, userDao.findAll().size());
     }
 
     @AfterAll
