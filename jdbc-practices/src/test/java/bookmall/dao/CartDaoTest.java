@@ -54,9 +54,9 @@ public class CartDaoTest {
 
     @AfterAll
     public static void cleanUp() {
-        userDao.deleteByNo(mockUserVo01.getNo());
-        categoryDao.deleteByNo(mockCategoryVo01.getNo());
-        bookDao.deleteByNo(mockBookVo01.getNo());
         cartDao.deleteByUserNoAndBookNo(mockUserVo01.getNo(), mockBookVo01.getNo());
+        bookDao.deleteByNo(mockBookVo01.getNo());
+        categoryDao.deleteByNo(mockCategoryVo01.getNo());
+        userDao.deleteByNo(mockUserVo01.getNo());
     }
 }

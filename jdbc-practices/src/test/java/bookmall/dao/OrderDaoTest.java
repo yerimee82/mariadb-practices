@@ -33,7 +33,6 @@ public class OrderDaoTest {
         bookVo.setCategoryNo(categoryVo.getNo());
         bookDao.insert(bookVo);
 
-        mockOrder.setNo(1L);
         mockOrder.setNumber("20240520-000012");
         mockOrder.setPayment(82400);
         mockOrder.setShipping("서울시 은평구 진관3로 77 구파발 래미안 926-801");
@@ -79,10 +78,10 @@ public class OrderDaoTest {
 
     @AfterAll
     public static void cleanUp() {
-        userDao.deleteByNo(userVo.getNo());
-        categoryDao.deleteByNo(categoryVo.getNo());
-        bookDao.deleteByNo(bookVo.getNo());
-        orderDao.deleteByNo(mockOrder.getNo());
         orderDao.deleteBooksByNo(mockOrder.getNo());
+        orderDao.deleteByNo(mockOrder.getNo());
+        bookDao.deleteByNo(bookVo.getNo());
+        categoryDao.deleteByNo(categoryVo.getNo());
+        userDao.deleteByNo(userVo.getNo());
     }
 }
