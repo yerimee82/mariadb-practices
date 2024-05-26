@@ -54,7 +54,7 @@ public class BookDao {
                 PreparedStatement pstmt = conn.prepareStatement("select a.no, a.title, a.status, b.name  from book a, author b where a.author_no = b.no order by no desc");
                 ResultSet rs = pstmt.executeQuery();
         ) {
-            while(rs.next()) {
+            while (rs.next()) {
                 Long no = rs.getLong(1);
                 String title = rs.getString(2);
                 String status = rs.getString(3);
@@ -102,6 +102,21 @@ public class BookDao {
         } catch (SQLException e) {
             System.out.println("error:" + e);
         }
+        return result;
+    }
+
+    public int deleteAll() {
+        int result = 0;
+
+        try (
+                Connection conn = getConnection();
+                PreparedStatement pstmt = conn.prepareStatement("delete from book");
+        ) {
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("error:" + e);
+        }
+
         return result;
     }
 }
